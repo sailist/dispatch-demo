@@ -75,9 +75,15 @@ DispatchKeySet computeDispatchKeySet(const std::vector<std::shared_ptr<TensorImp
         }
     }
     
-    // 如果没有tensor，返回只包含全局状态的dispatch key set
+    // 如果没有tensor，返回包含全局状态和默认CPU backend的dispatch key set
     if (combined_set.empty()) {
         combined_set = GlobalDispatchState::instance().computeFunctionalityKeys();
+        
+        // 如果仍然为空（没有全局功能性key），则添加默认的CPU backend key
+        // 这确保了标量操作等不涉及tensor的操作能够正确分发
+        if (combined_set.empty()) {
+            combined_set.add(DispatchKey::CPU);
+        }
     }
     
     return combined_set;

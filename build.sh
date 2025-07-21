@@ -10,7 +10,7 @@ cd build
 
 # 配置CMake，使用ninja生成器和clang编译器
 cmake .. -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_C_COMPILER=clang
 
